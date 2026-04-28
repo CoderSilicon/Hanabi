@@ -41,8 +41,8 @@ public class Projectile {
         if (x < 0) {
             x = 0;
             velX *= -bounceFactor;
-        } else if (x > 800) { // Replace 800 with your screenWidth variable
-            x = 800;
+        } else if (x > 1280) { // Replace 1280 with your screenWidth variable
+            x = 1280;
             velX *= -bounceFactor;
         }
 
@@ -50,8 +50,8 @@ public class Projectile {
         if (y < 0) {
             y = 0;
             velY *= -bounceFactor;
-        } else if (y > 1280) { // Replace 1280 with your screenHeight variable
-            y = 1280;
+        } else if (y > 800) { // Replace 800 with your screenHeight variable
+            y = 800;
             velY *= -bounceFactor;
         }
 

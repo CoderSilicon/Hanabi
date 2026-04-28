@@ -51,6 +51,13 @@ public class Player {
             thrustPower = 0.15;
         }
 
+        if(keyHandler.downPressed) {
+            velX *= 0.95; // Apply braking force
+            velY *= 0.95;
+            thrustPower = 0.15; // Reset thrust power when braking
+            thrustPower -= 0.005; // Allow thrust to build up again after braking
+        }
+
         velX *= DRAG;
         velY *= DRAG;
         x += velX;
@@ -98,6 +105,28 @@ public class Player {
             flame.lineTo(-18, 3);
             flame.closePath();
             g2d.fill(flame);
+        }
+
+        if(keyHandler.downPressed) {
+            // Left brake flame
+            g2d.setColor(Color.ORANGE);
+            GeneralPath brakeFlameLeft = new GeneralPath();
+            brakeFlameLeft.moveTo(0, -8);
+            brakeFlameLeft.lineTo(-5, -12);
+            brakeFlameLeft.lineTo(-2, -15);
+            brakeFlameLeft.lineTo(2, -10);
+            brakeFlameLeft.closePath();
+            g2d.fill(brakeFlameLeft);
+            
+            // Right brake flame
+            g2d.setColor(Color.RED);
+            GeneralPath brakeFlameRight = new GeneralPath();
+            brakeFlameRight.moveTo(0, 8);
+            brakeFlameRight.lineTo(-5, 12);
+            brakeFlameRight.lineTo(-2, 15);
+            brakeFlameRight.lineTo(2, 10);
+            brakeFlameRight.closePath();
+            g2d.fill(brakeFlameRight);
         }
 
         g2d.setColor(Color.WHITE);

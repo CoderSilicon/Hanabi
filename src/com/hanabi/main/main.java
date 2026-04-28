@@ -5,7 +5,7 @@ import javax.swing.ImageIcon;
 import java.awt.BorderLayout;
 import java.awt.MediaTracker;
 
-public class main {
+public class Main {
     public static void main(String[] args) {
         JFrame frame = new JFrame("Hanabi :: 花火");
         GamePanel game = new GamePanel();
