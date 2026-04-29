@@ -6,7 +6,8 @@
 
 [![Status](https://img.shields.io/badge/Status-Alpha_Development-orange?style=for-the-badge)](https://github.com/CoderSilicon/Hanabi)
 [![Build](https://img.shields.io/badge/Build-Passing-green?style=for-the-badge)](#)
-[![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](#)
+[![Player](https://img.shields.io/badge/Mode-Singleplayer-blue?style=for-the-badge)](#)
+![Version](https://img.shields.io/badge/Version-0.1.0-purple?style=for-the-badge)
 
 ---
 
@@ -27,4 +28,4 @@
 | **Physics** | It uses real physics and derivations to calculate everything making it feel weird but real |
 | **User-Based** | There is no control of game, Everything will be done by you - So if you lose then you really are **noob**. |
 
-> **Note:** It is not realeased and is still under development. Will be available in few consecutive working days.
+> **Note:** It is not realeased and is still under development. Will be available soon.
