@@ -1,13 +1,10 @@
 package src.com.hanabi.main;
 
-import src.com.hanabi.entities.Particle;
-import src.com.hanabi.entities.Player;
-import src.com.hanabi.entities.Projectile;
 import src.com.hanabi.input.KeyHandler;
+import src.com.hanabi.scenes.GameStartScene;
+import src.com.hanabi.scenes.Scene;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
-import java.util.ArrayList;
-import java.util.List;
 
 public class GamePanel extends Canvas implements Runnable {
     private boolean running = false;
@@ -17,19 +14,15 @@ public class GamePanel extends Canvas implements Runnable {
     private final int HEIGHT = 800;
 
     private KeyHandler keyHandler = new KeyHandler();
-    private Player player;
-    private List<Projectile> projectiles = new ArrayList<>();
-    // Top of your class
-    private java.util.List<Particle> particles = new java.util.ArrayList<>();
-
+    private Scene startScene;
+    private Scene activeScene;
 
     public GamePanel() {
         setSize(WIDTH, HEIGHT);
         setBackground(Color.BLACK);
         addKeyListener(keyHandler);
-
-        // Initialize Player in the center
-        player = new Player(WIDTH / 2, HEIGHT / 2, keyHandler, WIDTH, HEIGHT);
+        startScene = new GameStartScene(this, keyHandler);
+        activeScene = startScene;
     }
 
     public synchronized void start() {
@@ -49,9 +42,16 @@ public class GamePanel extends Canvas implements Runnable {
         }
     }
 
+    public void setScene(Scene scene) {
+        this.activeScene = scene;
+    }
+
+    public Scene getActiveScene() {
+        return activeScene;
+    }
+
     @Override
     public void run() {
-        // Fixed timestep game loop setup
         long lastTime = System.nanoTime();
         double amountOfTicks = 60.0;
         double ns = 1000000000 / amountOfTicks;
@@ -63,41 +63,18 @@ public class GamePanel extends Canvas implements Runnable {
             lastTime = now;
 
             while (delta >= 1) {
-                update(); // Calculate physics
+                update();
                 delta--;
             }
-            render(); // Draw to screen
+            render();
         }
         stop();
     }
 
     private void update() {
-        player.update();
-        if (keyHandler.spacePressed) {
-            // You might want a "cooldown" timer here so it doesn't shoot 60 bullets a
-            // second
-            projectiles.add(new Projectile(player.getX(), player.getY(), player.getAngle()));
+        if (activeScene != null) {
+            activeScene.update();
         }
-
-        // Update and clean up dead projectiles
-        for (int i = 0; i < projectiles.size(); i++) {
-            Projectile p = projectiles.get(i);
-            p.update();
-            if (!p.isAlive()) {
-                projectiles.remove(i);
-                i--;
-            }
-        }
-
-        for (int i = 0; i < particles.size(); i++) {
-            Particle p = particles.get(i);
-            p.update();
-            if (p.isDead()) {
-                particles.remove(i);
-                i--;
-            }
-        }
-        // Later add: bulletManager.update(), particleManager.update()
     }
 
     private void render() {
@@ -106,20 +83,14 @@ public class GamePanel extends Canvas implements Runnable {
             createBufferStrategy(3);
             return;
         }
+
         Graphics2D g2d = (Graphics2D) bs.getDrawGraphics();
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-        // Clear screen
         g2d.setColor(getBackground());
         g2d.fillRect(0, 0, getWidth(), getHeight());
 
-        // Draw Player
-        player.render(g2d);
-
-        player.render(g2d);
-
-        for (Projectile p : projectiles) {
-            p.render(g2d);
+        if (activeScene != null) {
+            activeScene.render(g2d);
         }
 
         g2d.dispose();

@@ -4,19 +4,18 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.BasicStroke;
 
-public class Projectile {
-    private double x, y, velX, velY;
+public class Projectile extends Entity {
     private float hue = 0; // For the rainbow effect
     private boolean alive = true;
-    private int lifeSpan = 100; // Frames until it disappears
+    private int lifeSpan = 200; // Frames until it disappears
     private double angle;
     private double trailX[], trailY[];
     private int trailIndex = 0;
     private double bounceFactor = 0.9;
+    private int radius = 4;
 
-    public Projectile(double x, double y, double angle) {
-        this.x = x;
-        this.y = y;
+    public Projectile(double x, double y, double angle, int screenWidth, int screenHeight) {
+        super(x, y, screenWidth, screenHeight);
         this.angle = angle;
 
         // Projectile speed
@@ -41,8 +40,8 @@ public class Projectile {
         if (x < 0) {
             x = 0;
             velX *= -bounceFactor;
-        } else if (x > 1280) { // Replace 1280 with your screenWidth variable
-            x = 1280;
+        } else if (x > screenWidth) {
+            x = screenWidth;
             velX *= -bounceFactor;
         }
 
@@ -50,8 +49,8 @@ public class Projectile {
         if (y < 0) {
             y = 0;
             velY *= -bounceFactor;
-        } else if (y > 800) { // Replace 800 with your screenHeight variable
-            y = 800;
+        } else if (y > screenHeight) {
+            y = screenHeight;
             velY *= -bounceFactor;
         }
 
@@ -102,5 +101,13 @@ public class Projectile {
 
     public boolean isAlive() {
         return alive;
+    }
+
+    public int getRadius() {
+        return radius;
+    }
+
+    public void kill() {
+        alive = false;
     }
 }

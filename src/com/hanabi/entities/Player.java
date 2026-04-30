@@ -37,6 +37,10 @@ public class Player {
         return angle;
     }
 
+    public int getRadius() {
+        return 14;
+    }
+
     public void update() {
         if (keyHandler.leftPressed)
             angle -= ROTATION_SPEED;

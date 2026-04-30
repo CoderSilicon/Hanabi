@@ -18,4 +18,5 @@ public abstract class Entity {
 
     public double getX() { return x; }
     public double getY() { return y; }
+    public int getRadius() { return 10; }
 }
